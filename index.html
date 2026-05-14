@@ -21,6 +21,41 @@
       <span class="name">Rajini</span>
     </h1>
     <p id="welcome-subtitle" class="subtitle">Glad to have you here ✨</p>
+
+    <div class="input-group">
+      <label for="name-input" class="input-label">Your name please</label>
+      <div class="input-row">
+        <input type="text" id="name-input" class="name-input" placeholder="Enter your name..." />
+        <button id="refresh-btn" class="refresh-btn">Refresh</button>
+      </div>
+    </div>
   </main>
+
+  <script>
+    const nameInput = document.getElementById('name-input');
+    const refreshBtn = document.getElementById('refresh-btn');
+    const nameSpan = document.querySelector('.name');
+    const subtitle = document.getElementById('welcome-subtitle');
+
+    refreshBtn.addEventListener('click', () => {
+      const newName = nameInput.value.trim();
+      if (!newName) return;
+
+      // Re-trigger animation by cloning & replacing
+      nameSpan.style.animation = 'none';
+      nameSpan.offsetHeight; // force reflow
+      nameSpan.style.animation = '';
+      nameSpan.classList.add('pop');
+
+      nameSpan.textContent = newName;
+      subtitle.textContent = `Glad to have you here, ${newName} ✨`;
+
+      setTimeout(() => nameSpan.classList.remove('pop'), 600);
+    });
+
+    nameInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') refreshBtn.click();
+    });
+  </script>
 </body>
 </html>
